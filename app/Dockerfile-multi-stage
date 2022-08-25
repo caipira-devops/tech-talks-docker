@@ -1,0 +1,19 @@
+# First stage
+FROM debian as base
+
+ENV THIS_IS_ENV=default_env_value
+
+ARG THIS_IS_ARG=default_arg_value
+
+RUN echo "I'm in the base image at build time and THIS_IS_ENV value is ${THIS_IS_ENV:-}"
+
+RUN echo "I'm in the base image at build time and THIS_IS_ARG value is ${THIS_IS_ARG:-}"
+
+# Second stage
+FROM base
+
+RUN echo "I'm in the second stage image at build time and THIS_IS_ENV value is ${THIS_IS_ENV:-}"
+
+RUN echo "I'm in the second stage image at build time and THIS_IS_ARG value is ${THIS_IS_ARG:-}"
+
+CMD ["bash", "-c", "echo At runtime and THIS_IS_ENV value is ${THIS_IS_ENV:-}, THIS_IS_ARG value is ${THIS_IS_ARG:-}"]

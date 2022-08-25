@@ -1,0 +1,130 @@
+===>>>>>=================================
+===>>>>>=================================
+===>>>>>=================================
+
+Primeiros passos:
+
+	docker run -d -p 80:80 docker/getting-started
+
+	docker ps
+
+	docker container ls
+
+	docker logs -f container
+
+	docker run -d -p 8080:80 --name tech-talk-docker docker/getting-started
+
+	docker container --help
+
+	docker rm container
+
+	docker stop container
+
+	docker ps -a
+
+	docker start container
+
+	docker rm container
+
+===>>>>>=================================
+===>>>>>=================================
+===>>>>>=================================
+
+Entrar dentro de um container:
+
+	docker run -d -p 8080:80 --name tech-talk-docker docker/getting-started
+
+	docker exec -it container /bin/bash ou /bin/sh
+
+===>>>>>=================================
+===>>>>>=================================
+===>>>>>=================================
+
+Primeira Imagem usando DockerFile
+
+docker build -t tech-talk-docker .
+
+docker images
+
+docker run -d -p 3000:3000 tech-talk-docker
+
+===>>>>>=================================
+===>>>>>=================================
+===>>>>>=================================
+
+Alterando nossa aplicação:
+
+In the src/static/js/app.js file, update line 56 to use the new empty text.
+
+ -                <p className="text-center">No items yet! Add one above!</p>
+ +                <p className="text-center">You have no todo items yet! Add one above!</p>
+
+
+docker build -t tech-talk-docker:v2.0.0 .
+
+docker tag tech-talk-docker:latest tech-talk-docker:v1.0.0
+
+docker tag tech-talk-docker:v2.0.0 tech-talk-docker:latest
+
+docker run -d -p 3000:3000 tech-talk-docker:v2.0.0
+
+
+===>>>>>=================================
+===>>>>>=================================
+===>>>>>=================================
+
+Volumes:
+
+docker volume create todo-db
+
+docker run -dp 3000:3000 -v todo-db:/etc/todos getting-started
+
+===>>>>>=================================
+===>>>>>=================================
+===>>>>>=================================
+
+ENV
+
+Em um Dockerfile, o ENV permite declarar variáveis de ambiente que estarão disponíveis durante a fase de compilação e em tempo de execução.
+
+docker build -f Dockerfile-env --no-cache -t tech-talk-docker-env .
+
+docker run tech-talk-docker-env:latest
+
+docker run --env THIS_IS_ENV="Hello" tech-talk-docker-env:latest
+
+===>>>>>=================================
+===>>>>>=================================
+===>>>>>=================================
+
+ARG
+
+O ARG permite definir uma variável de ambiente que estará disponível apenas em tempo de compilação, e que pode ser substituída durante a compilação.
+
+
+docker build -f Dockerfile-arg --no-cache -t tech-talk-docker-arg .
+
+docker build -f Dockerfile-arg --no-cache -t tech-talk-docker-arg --build-arg THIS_IS_ARG="Hello" .
+
+docker run --rm tech-talk-docker-env
+
+
+===>>>>>=================================
+===>>>>>=================================
+===>>>>>=================================
+
+Multi-stage builds (Se der tempo)
+
+docker build -f Dockerfile --no-cache -t tech-talk-docker-multi-stage .
+
+docker build -f Dockerfile --build-arg THIS_IS_ARG=overridden_arg --no-cache -t multi-stage .
+
+docker run --env THIS_IS_ENV=overridden_env multi-stage
+
+
+
+
+
+
+
+

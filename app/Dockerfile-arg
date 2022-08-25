@@ -1,0 +1,10 @@
+FROM debian as base
+
+# Declare the arg
+ARG THIS_IS_ARG=default_arg_value
+
+# Echo its value at build time
+RUN echo "I'm in the base image at build time and THIS_IS_ARG value is ${THIS_IS_ARG:-}"
+
+# Notice that at runtime, it's undeclared
+CMD ["bash", "-c", "echo At runtime and THIS_IS_ARG value is ${THIS_IS_ARG:-}"]
